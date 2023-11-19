@@ -1,0 +1,76 @@
+/* Add your styles here */
+
+.container {
+    width: 100%;
+    margin: auto;
+    padding: 20px;
+  }
+
+  .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  label {
+    font-weight: bold;
+  }
+  
+  input[type="text"],
+  input[type="number"],
+  input[type="url"] {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+  }
+
+  .newBook{
+    color: #0d6efd;
+  }
+  
+  button {
+    padding: 10px 20px;
+    margin-top: 10px;
+  }
+  
+  .invalid-feedback {
+    color: #dc3545;
+    font-size: 80%;
+  }
+  
+  .author{
+    font-size: 24px;
+  }
+
+  .card {
+    margin-bottom: 20px;
+  }
+
+
+
+/* Styles for desktop screens */
+@media (min-width: 768px) {
+  .col-sm-6 {
+    width: 50%; /* Adjust the width as needed */
+  }
+
+  .btn {
+    width: 100%; /* Make buttons fill the container on desktop */
+  }
+}
+
+/* Styles for mobile screens */
+@media (max-width: 767px) {
+  .col-sm-4 {
+    width: 100%; /* Make columns full width on mobile */
+    margin-bottom: 10px; /* Add some spacing between elements */
+  }
+
+  .btn {
+    width: 100%; /* Make buttons fill the container on mobile */
+  }
+}
