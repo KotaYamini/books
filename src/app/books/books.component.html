@@ -1,4 +1,4 @@
-<div class="container mt-4 pt-4">
+<div class="container w-100 h-100 mt-2 pt-4">
     <div class="row">
         <!--search for new book-->
         <div class="col-md-6 ">
@@ -7,7 +7,7 @@
         <div class="col-md-4 mb-2">
             <button type="button" class="btn btn-success btn-block" (click)="searchBooks()">Search</button>
         </div>
-        <!--sort data in two ways: alphabetically by title or chronological by publish date.-->
+        <!--sorting data in two ways: alphabetically by title or chronological by publish date.-->
         <div class="col-md-2 mb-2">
             <button type="button" class="btn btn-primary btn-block" (click)="toggleSortMethod()">
                 <i class="bi bi-sort-up"></i>
@@ -18,14 +18,14 @@
 
 
 
-    <div class="mt-4" *ngIf="booksList">
+    <div class="mb-2" *ngIf="booksList">
 
         <!-- Author Information -->
         <section class="py-3 bg-light">
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-12 col-lg-10 col-xl-8 col-xxl-7">
-                        <div class="card p-4">
+                        <div class="card">
                             <div class="row gy-3 align-items-center">
                                 <div class="col-md-12">
                                     <div class="card-body">
@@ -44,95 +44,101 @@
                 </div>
             </div>
         </section>
-
+        <div class="d-flex justify-content-center align-items-center">
         <div class="col-sm-6 col-lg-6 col-xl-6 col-xxl-6 col-xs-12 col-md-12 mt-4">
             <!-- Books List -->
-            <div class="card mb-2" *ngFor="let item of booksList?.books; let i = index;">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-sm-6 col-md-6 col-lg-2">
-                            <img class="card-img img-fluid" [src]="item.imageUrl" alt="Book Cover"
-                                style="max-width: 100%; height: 50%;">
+           
+                <div class="card-columns">
+                    <div class="card mb-2" *ngFor="let item of booksList?.books; let i = index;">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-6 col-md-6 col-lg-2">
+                                    <img class="card-img img-fluid" [src]="item.imageUrl" alt="Book Cover"
+                                        style="max-width: 100%; height: 50%;">
+                                </div>
+                                <div class="col-sm-6 col-md-6 col-lg-10">
+                                    <a [attr.href]="item?.purchaseLink" class="card-title">{{item?.title}}</a>
+                                    <p class="card-text">{{item?.PublishDate}}</p>
+        
+        
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-sm-6 col-md-6 col-lg-10">
-                            <a [attr.href]="item?.purchaseLink" class="card-title">{{item?.title}}</a>
-                            <p class="card-text">{{item?.PublishDate}}</p>
-
-
+                        <div class="card-bottom btn-group btn-group-lg btn-vertical">
+                            <!-- Update or Delete actions on books list -->
+                            <button  class="btn btn-primary btn-theme  pull-left " (click)="selectBookForEdit(i)">
+                                <i class="bi bi-pencil"></i>
+                            </button>
+                            <button  class="btn btn-danger btn-theme pull-right" (click)="deleteBook(i)">
+                                <i class="bi bi-trash"></i>
+                            </button>
                         </div>
                     </div>
-                </div>
-                <div class="card-bottom">
-                    <!-- Update or Delete actions on books list -->
-                    <a role="button" class="btn btn-primary btn-block w-50" (click)="selectBookForEdit(i)">
-                        <i class="bi bi-pencil"></i>
-                    </a>
-                    <a role="button" class="btn btn-danger btn-block w-50" (click)="deleteBook(i)">
-                        <i class="bi bi-trash"></i>
-                    </a>
-                </div>
+                    </div>
             </div>
         </div>
-        <div>
-            <!-- Add or Edit Book Form -->
-            <div class="mt-4">
-                <h2 class="newBook">{{ selectedBookIndex !== null ? 'Edit Book' : 'Add a New Book' }}</h2>
-                <form [formGroup]="newBookForm" (submit)="selectedBookIndex !== null ? updateBook() : addBook()"
-                    class="needs-validation" novalidate>
+     
+    </div>
 
-                    <div class="form-group">
-                        <label for="title">Title:</label>
-                        <input type="text" class="form-control" id="title" name="title" formControlName="title"
-                            required>
-                        <div *ngIf="!newBookForm.controls['title'].valid && (newBookForm.controls['title'].dirty || newBookForm.controls['title'].touched)"
-                            class="invalid-feedback">Title is required.</div>
+    <div>
+        <!-- Add or Edit Book Form -->
+        <div class="mt-4">
+            <h2 class="newBook">{{ selectedBookIndex !== null ? 'Edit Book' : 'Add a New Book' }}</h2>
+            <form [formGroup]="newBookForm" (submit)="selectedBookIndex !== null ? updateBook() : addBook()"
+                class="needs-validation" novalidate>
+
+                <div class="form-group">
+                    <label for="title">Title:</label>
+                    <input type="text" class="form-control" id="title" name="title" formControlName="title"
+                        required>
+                    <div *ngIf="!newBookForm.controls['title'].valid && (newBookForm.controls['title'].dirty || newBookForm.controls['title'].touched)"
+                        class="invalid-feedback">Title is required.</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="purchaseLink">Purchase Link:</label>
+                    <input type="text" class="form-control" id="purchaseLink" name="purchaseLink"
+                        formControlName="purchaseLink" required>
+                    <div *ngIf="!newBookForm.controls['purchaseLink'].valid &&
+          (newBookForm.controls['purchaseLink'].dirty || newBookForm.controls['purchaseLink'].touched)"
+                        class="invalid-feedback">
+                        Please provide a valid Purchase Link.
                     </div>
+                </div>
 
-                    <div class="form-group">
-                        <label for="purchaseLink">Purchase Link:</label>
-                        <input type="text" class="form-control" id="purchaseLink" name="purchaseLink"
-                            formControlName="purchaseLink" required>
-                        <div *ngIf="!newBookForm.controls['purchaseLink'].valid &&
-              (newBookForm.controls['purchaseLink'].dirty || newBookForm.controls['purchaseLink'].touched)"
-                            class="invalid-feedback">
-                            Please provide a valid Purchase Link.
-                        </div>
+                <div class="form-group">
+                    <label for="PublishDate">Publish Year:</label>
+                    <input type="text" class="form-control" id="PublishDate" name="PublishDate"
+                        formControlName="PublishDate" required>
+                    <div *ngIf="!newBookForm.controls['PublishDate'].valid &&
+          (newBookForm.controls['PublishDate'].dirty || newBookForm.controls['PublishDate'].touched)"
+                        class="invalid-feedback">
+                        Please provide a valid publish date.
                     </div>
+                </div>
 
-                    <div class="form-group">
-                        <label for="PublishDate">Publish Year:</label>
-                        <input type="text" class="form-control" id="PublishDate" name="PublishDate"
-                            formControlName="PublishDate" required>
-                        <div *ngIf="!newBookForm.controls['PublishDate'].valid &&
-              (newBookForm.controls['PublishDate'].dirty || newBookForm.controls['PublishDate'].touched)"
-                            class="invalid-feedback">
-                            Please provide a valid publish date.
-                        </div>
+                <div class="form-group">
+                    <label for="imageUrl">Image URL:</label>
+                    <input type="url" class="form-control" id="imageUrl" name="imageUrl" formControlName="imageUrl"
+                        required>
+                    <div *ngIf="!newBookForm.controls['imageUrl'].valid &&
+          (newBookForm.controls['imageUrl'].dirty || newBookForm.controls['imageUrl'].touched)"
+                        class="invalid-feedback">
+                        Please provide a valid URL.
                     </div>
+                </div>
 
-                    <div class="form-group">
-                        <label for="imageUrl">Image URL:</label>
-                        <input type="url" class="form-control" id="imageUrl" name="imageUrl" formControlName="imageUrl"
-                            required>
-                        <div *ngIf="!newBookForm.controls['imageUrl'].valid &&
-              (newBookForm.controls['imageUrl'].dirty || newBookForm.controls['imageUrl'].touched)"
-                            class="invalid-feedback">
-                            Please provide a valid URL.
-                        </div>
-                    </div>
-
-                    <div class="text-center">
-                        <button type="submit" class="btn btn-primary mt-2">
-                            {{ selectedBookIndex !== null ? 'Update Book' : 'Add Book' }}
-                        </button>
-                    </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary mt-2">
+                        {{ selectedBookIndex !== null ? 'Update Book' : 'Add Book' }}
+                    </button>
+                </div>
 
 
-                    <!-- If editing, provide a button to cancel the edit -->
-                    <button type="button" *ngIf="selectedBookIndex !== null" class="btn btn-secondary"
-                        (click)="selectedBookIndex = null; newBookForm.reset()">Cancel</button>
-                </form>
-            </div>
-
+                <!-- If editing, provide a button to cancel the edit -->
+                <button type="button" *ngIf="selectedBookIndex !== null" class="btn btn-secondary"
+                    (click)="selectedBookIndex = null; newBookForm.reset()">Cancel</button>
+            </form>
         </div>
+
     </div>
