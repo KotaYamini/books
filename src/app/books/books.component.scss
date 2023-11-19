@@ -1,8 +1,8 @@
 /* Add your styles here */
 
 .container {
-    width: 100%;
     margin: auto;
+    width: 100%;
     padding: 20px;
   }
 
@@ -58,6 +58,10 @@
     width: 50%; /* Adjust the width as needed */
   }
 
+  .card-columns {
+    column-count: 2;
+  }
+  
   .btn {
     width: 100%; /* Make buttons fill the container on desktop */
   }
@@ -65,9 +69,19 @@
 
 /* Styles for mobile screens */
 @media (max-width: 767px) {
+  .btn-vertical {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    display: flex
+  }
   .col-sm-4 {
     width: 100%; /* Make columns full width on mobile */
     margin-bottom: 10px; /* Add some spacing between elements */
+  }
+
+  .card-columns {
+    column-count: 1;
   }
 
   .btn {
